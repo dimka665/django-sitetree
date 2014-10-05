@@ -1,5 +1,6 @@
 from __future__ import unicode_literals
 
+import re
 import warnings
 
 from collections import defaultdict
@@ -465,6 +466,7 @@ class SiteTree(object):
         else:
             # urlquote is an attempt to support non-ascii in url.
             current_url = urlquote(self._global_context['request'].path)
+            current_url = re.findall('(.*?)(?:/\d+)?$', current_url)[0]
             urls_cache = self.get_cache_entry('urls', tree_alias)
             if urls_cache:
                 for url_item in urls_cache:
